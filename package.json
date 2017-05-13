@@ -1,6 +1,6 @@
 {
   "name": "stylelint-at-rule-no-children",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Stylelint rule to disallow children inside at rules",
   "main": "index.js",
   "scripts": {
