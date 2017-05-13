@@ -10,22 +10,44 @@ test(rule.rule, {
     { code: "@include foo() { color: $white; }" },
     {
       code: `
-        @include bar() {
-          font-size: 11px;
-          margin-top: 12px;
-        }
+      @include bar() {
+        font-size: 11px;
+        margin-top: 12px;
+      }
     `},
     {
       code: `
-        @include baz() {
-          @include another(1234);
+      @include baz() {
+        @include another(1234);
 
-          font-size: 11px;
-          margin-top: 12px;
-        }
-      `
-    },
+        font-size: 11px;
+        margin-top: 12px;
+      }
+    `},
     { code: `@media screen and (max-width: 480px) { color: #fff; }` },
+    {
+      code: `
+      @-webkit-keyframes pacman-balls {
+        75% {
+          opacity: 0.7;
+        }
+
+        100% {
+          @include transform(translate(-100px, -6.25px));
+        }
+      }
+    `},
+    {
+      code: `
+      @include baz() {
+        font-size: 11px;
+        margin-top: 12px;
+
+        @include another(1234) {
+          margin-bottom: 2px;
+        }
+      }
+    `},
 
     // accepted versions of rejected code
     {
@@ -38,8 +60,7 @@ test(rule.rule, {
             margin-top: 1px;
           }
         }
-      `,
-    },
+    `},
     {
       code: `custom { @media screen and (max-width: 480px) { color: #fff } }`,
     },
@@ -48,15 +69,15 @@ test(rule.rule, {
         @media screen and (max-width: 480px) {
           color: #fff;
         }
-      }`,
-    },
+      }
+    `},
     {
       code: `#id {
         @media screen and (max-width: 480px) {
           color: #fff;
         }
-      }`,
-    }
+      }
+    `},
   ],
 
   // rejections
@@ -195,4 +216,4 @@ test(rule.rule, {
       }
     `},
   ],
-})
+});

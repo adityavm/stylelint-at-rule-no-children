@@ -19,18 +19,26 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
     }
 
     root.walkAtRules(/[^(?:keyframes)]/, function(statement) {
-      let block = statement.toString().match(/{([^}]*)/);
-      if (!block) return; // blockless rule
-
-      let matches = block[1].match(/\s*([.#\S]+)\s?{/);
-      if (matches) {
-        stylelint.utils.report({
-          ruleName: ruleName,
-          result: result,
-          node: statement,
-          message: messages.unexpected(matches[1], statement.name),
-        });
-      }
+      (statement.nodes || []).forEach(node => {
+        if (node.type === "rule") {
+          if (node.selector.match(/^[^.#]/)) {
+            if (node.selector.match(/^(\d+%|from|to)/)) return;
+            stylelint.utils.report({
+              ruleName: ruleName,
+              result: result,
+              node: statement,
+              message: messages.unexpected(node.selector, statement.name),
+            });
+          } else {
+            stylelint.utils.report({
+              ruleName: ruleName,
+              result: result,
+              node: statement,
+              message: messages.unexpected(node.selector, statement.name),
+            });
+          }
+        }
+      });
     });
   };
 });
