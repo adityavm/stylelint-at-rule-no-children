@@ -18,26 +18,17 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
       return;
     }
 
-    root.walkAtRules(/[^(?:keyframes)]/, function(statement) {
+    root.walkAtRules(function(statement) {
       (statement.nodes || []).forEach(node => {
-        if (node.type === "rule") {
-          if (node.selector.match(/^[^.#]/)) {
-            if (node.selector.match(/^(\d+%|from|to)/)) return;
-            stylelint.utils.report({
-              ruleName: ruleName,
-              result: result,
-              node: statement,
-              message: messages.unexpected(node.selector, statement.name),
-            });
-          } else {
-            stylelint.utils.report({
-              ruleName: ruleName,
-              result: result,
-              node: statement,
-              message: messages.unexpected(node.selector, statement.name),
-            });
-          }
-        }
+        if (node.type !== "rule") return; // allow non-rules
+        if (node.selector.match(/^[^.#]?(\d+%|from|to)/)) return; // allow 90% / from / to
+
+        stylelint.utils.report({
+          ruleName: ruleName,
+          result: result,
+          node: statement,
+          message: messages.unexpected(node.selector, statement.name),
+        });
       });
     });
   };
