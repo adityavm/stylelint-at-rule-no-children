@@ -15,7 +15,7 @@
   ],
   "author": "Aditya Mukherjee",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "stylelint": "^7.10.1",
     "stylelint-rule-tester": "^0.6.2",
     "stylelint-test-rule-tape": "^0.2.0",
