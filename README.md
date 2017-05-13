@@ -2,6 +2,8 @@
 
 Stylelint rule to disallow block declarations inside at rules.
 
+[![Build Status](https://img.shields.io/travis/adityavm/stylelint-at-rule-no-children/master.svg?style=flat-square)](https://travis-ci.org/adityavm/stylelint-at-rule-n-children)
+
 ## Why?
 
 Conceptually, this is similar to why we don't declare functions inside conditional blocks in general programming.
