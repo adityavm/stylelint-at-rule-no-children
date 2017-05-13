@@ -83,6 +83,22 @@ test(rule.rule, {
   // rejections
   reject: [
     {
+      code: `
+      @include baz() {
+        font-size: 11px;
+        margin-top: 12px;
+
+        @include another(1234) {
+          margin-bottom: 2px;
+
+          body {
+            color: red;
+          }
+        }
+      }`,
+      message: `Unexpected block "body" inside rule "include". (${ruleName})`,
+    },
+    {
       code: "@include foo() { .class { color: $white; } }",
       message: `Unexpected block ".class" inside rule "include". (${ruleName})`,
     },
