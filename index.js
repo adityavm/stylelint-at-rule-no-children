@@ -3,7 +3,7 @@ const stylelint = require("stylelint");
 const ruleName = "aditayvm/at-rule-no-children";
 
 const messages = stylelint.utils.ruleMessages(ruleName, ({
-  unexpected: (block, rule) => `Unexpected block "${block}" inside rule "${rule}".`,
+  unexpected: (block, rule) => `Unexpected rule "${block}" inside at-rule "${rule}".`,
 }));
 
 module.exports = stylelint.createPlugin(ruleName, function(options = "") {
@@ -24,9 +24,9 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
         if (node.selector.match(/^[^.#]?(\d+%|from|to)/)) return; // allow 90% / from / to
 
         stylelint.utils.report({
-          ruleName: ruleName,
-          result: result,
-          node: statement,
+          ruleName,
+          result,
+          node,
           message: messages.unexpected(node.selector, statement.name),
         });
       });

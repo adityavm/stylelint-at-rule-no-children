@@ -96,11 +96,11 @@ test(rule.rule, {
           }
         }
       }`,
-      message: `Unexpected block "body" inside rule "include". (${ruleName})`,
+      message: `Unexpected rule "body" inside at-rule "include". (${ruleName})`,
     },
     {
       code: "@include foo() { .class { color: $white; } }",
-      message: `Unexpected block ".class" inside rule "include". (${ruleName})`,
+      message: `Unexpected rule ".class" inside at-rule "include". (${ruleName})`,
     },
     {
       code: `
@@ -110,23 +110,23 @@ test(rule.rule, {
           }
         }
       `,
-      message: `Unexpected block "custom" inside rule "include". (${ruleName})`,
+      message: `Unexpected rule "custom" inside at-rule "include". (${ruleName})`,
     },
     {
       code: `@media screen and (max-width: 480px) { custom { color: #fff } }`,
-      message: `Unexpected block "custom" inside rule "media". (${ruleName})`,
+      message: `Unexpected rule "custom" inside at-rule "media". (${ruleName})`,
     },
     {
       code: `@media screen and (max-width: 480px) {
         .class { color: #fff }
       }`,
-      message: `Unexpected block ".class" inside rule "media". (${ruleName})`,
+      message: `Unexpected rule ".class" inside at-rule "media". (${ruleName})`,
     },
     {
       code: `@media screen and (max-width: 480px) {
         #id { color: #fff }
       }`,
-      message: `Unexpected block "#id" inside rule "media". (${ruleName})`,
+      message: `Unexpected rule "#id" inside at-rule "media". (${ruleName})`,
     },
   ],
 });
