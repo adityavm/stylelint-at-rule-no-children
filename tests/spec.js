@@ -233,3 +233,61 @@ test(rule.rule, {
     `},
   ],
 });
+
+test(rule.rule, {
+  ruleName,
+  config: [{ ignore: ["foo", "baz"] }],
+  accept: [
+    {
+      code: `
+      @foo () {
+        body {
+          display: block;
+        }
+      }
+    `},
+    {
+      code: `
+      @include foo() {
+        body {
+          display: block;
+        }
+      }
+    `},
+  ],
+  reject: [
+    {
+      code: `
+      @include bar() {
+        body {
+          display: block;
+        }
+      }
+    `},
+    {
+      code: `
+      $boolean: true;
+      @if ($boolean) {
+        body { display: block }
+      } else {
+        body { display: flex }
+      }
+    `},
+  ],
+});
+
+test(rule.rule, {
+  ruleName,
+  config: [{ ignore: ["if"] }],
+  accept: [
+    {
+      code: `
+      $boolean: true;
+      @if ($boolean) {
+        body { display: block }
+      } else {
+        body { display: flex }
+      }
+    `},
+  ],
+});

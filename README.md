@@ -4,6 +4,51 @@ Stylelint rule to disallow block declarations inside at rules.
 
 [![Build Status](https://img.shields.io/travis/adityavm/stylelint-at-rule-no-children/master.svg?style=flat-square)](https://travis-ci.org/adityavm/stylelint-at-rule-no-children)
 
+[Usage](#usage)  
+[Configuration](#configuration)  
+[Why?](#why)  
+[TL;DR](#tldr)  
+
+## Usage
+
+Add `adityavm/stylelint-at-rule-no-children` to your `.stylelintrc`, like so:
+```
+{
+  ...
+  plugins: [
+    ...
+    "adityavm/stylelint-at-rule-no-children",
+  ],
+  rules: {
+    ...
+    "adityavm/stylelint-at-rule-no-children": [{ <options> }],
+  }
+}
+```
+
+## Configuration
+
+The rule accepts an `ignore` list of strings to allow when checking rules or their parameters. Consider the following:
+```css
+@include foo() {
+  body { color: #ff0000; }
+}
+
+@foo() {
+  body { color: #ff0000; }
+}
+```
+
+Normally, both the above blocks would be rejected. However, setting the following config will allow them both:
+
+```javascript
+{
+  "adityavm/stylelint-at-rule-no-children": [{ ignore: ["foo"] }],
+}
+```
+
+_Note:_ This is not recommended, as it goes against the ideology behind the plugin. But if you need to define exceptions, now you can.
+
 ## Why?
 
 Conceptually, this is similar to why we don't declare functions inside conditional blocks in general programming.

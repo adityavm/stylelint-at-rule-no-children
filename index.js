@@ -18,8 +18,14 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
       return;
     }
 
+    const params = new RegExp(`(${((options || {}).ignore || []).join("|")})\\\(`);
+
     root.walkAtRules(function(statement) {
       (statement.nodes || []).forEach(node => {
+        if ((options || {}).ignore) { // ignore list
+          if (options.ignore.includes(node.parent.name)) return; // @foo
+          if (params.test(node.parent.params)) return; // @include foo
+        }
         if (node.type !== "rule") return; // allow non-rules
         if (node.selector.match(/^[^.#]?(\d+%|from|to)/)) return; // allow 90% / from / to
 
