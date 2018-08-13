@@ -11,17 +11,21 @@ Stylelint rule to disallow block declarations inside at rules.
 
 ## Usage
 
-Add `adityavm/stylelint-at-rule-no-children` to your `.stylelintrc`, like so:
+Install the package:
+
+`npm i stylelint-at-rule-no-children`
+
+Add the plugin and rule to your `.stylelintrc`, like so:
 ```
 {
   ...
   plugins: [
     ...
-    "adityavm/stylelint-at-rule-no-children",
+    "stylelint-at-rule-no-children",
   ],
   rules: {
     ...
-    "adityavm/stylelint-at-rule-no-children": [{ <options> }],
+    "aditayvm/at-rule-no-children": [{ <options> }],
   }
 }
 ```
