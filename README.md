@@ -25,7 +25,7 @@ Add the plugin and rule to your `.stylelintrc`, like so:
   ],
   rules: {
     ...
-    "aditayvm/at-rule-no-children": [{ <options> }],
+    "adityavm/at-rule-no-children": [{ <options> }],
   }
 }
 ```
