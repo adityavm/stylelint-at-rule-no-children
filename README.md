@@ -4,10 +4,10 @@ Stylelint rule to disallow block declarations inside at rules.
 
 [![Build Status](https://img.shields.io/travis/adityavm/stylelint-at-rule-no-children/master.svg?style=flat-square)](https://travis-ci.org/adityavm/stylelint-at-rule-no-children)
 
-[Usage](#usage)  
-[Configuration](#configuration)  
-[Why?](#why)  
-[TL;DR](#tldr)  
+[Usage](#usage)
+[Configuration](#configuration)
+[Why?](#why)
+[TL;DR](#tldr)
 
 ## Usage
 
@@ -47,7 +47,7 @@ Normally, both the above blocks would be rejected. However, setting the followin
 
 ```javascript
 {
-  "adityavm/stylelint-at-rule-no-children": [{ ignore: ["foo"] }],
+  "adityavm/at-rule-no-children": [{ ignore: ["foo"] }],
 }
 ```
 
