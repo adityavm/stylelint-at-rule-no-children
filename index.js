@@ -11,7 +11,7 @@ module.exports = stylelint.createPlugin(ruleName, function (options = "") {
         var validOptions = stylelint.utils.validateOptions(
             ruleName,
             result,
-            {actual: options},
+            options,
         );
 
         if (!validOptions) {
