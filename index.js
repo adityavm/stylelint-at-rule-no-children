@@ -8,11 +8,11 @@ const messages = stylelint.utils.ruleMessages(ruleName, ({
 
 module.exports = stylelint.createPlugin(ruleName, function(options = "") {
   return function(root, result) {
-    var validOptions = stylelint.utils.validateOptions({
-      ruleName: ruleName,
-      result: result,
-      actual: options,
-    });
+    var validOptions = stylelint.utils.validateOptions(
+      ruleName,
+      result,
+      options,
+    );
 
     if (!validOptions) {
       return;
@@ -20,7 +20,7 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
 
     const params = new RegExp(`(${((options || {}).ignore || []).join("|")})\\\(`);
 
-    root.walkAtRules(function(statement) {
+    root.walkAtRules(function(statement){
       (statement.nodes || []).forEach(node => {
         if ((options || {}).ignore) { // ignore list
           if (options.ignore.includes(node.parent.name)) return; // @foo
