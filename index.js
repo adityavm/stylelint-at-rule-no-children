@@ -9,9 +9,9 @@ const messages = stylelint.utils.ruleMessages(ruleName, ({
 module.exports = stylelint.createPlugin(ruleName, function(options = "") {
   return function(root, result) {
     var validOptions = stylelint.utils.validateOptions(
-      ruleName,
       result,
-      options,
+      ruleName,
+      options
     );
 
     if (!validOptions) {
