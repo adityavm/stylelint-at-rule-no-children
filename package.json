@@ -1,10 +1,14 @@
 {
-  "name": "stylelint-at-rule-no-children",
+  "name": "@optimaxdev/stylelint-at-rule-no-children",
   "version": "0.3.1",
-  "description": "Stylelint rule to disallow children inside at rules",
+  "description": "Optimax stylelint rule to disallow children inside at rules",
   "main": "index.js",
   "scripts": {
     "test": "tape tests/spec.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/optimaxdev/stylelint-config"
   },
   "keywords": [
     "stylelint",
@@ -13,7 +17,7 @@
     "sass",
     "scss"
   ],
-  "author": "Aditya Mukherjee",
+  "author": "Edmon Avetisyan",
   "license": "MIT",
   "devDependencies": {
     "stylelint": "^7.10.1",

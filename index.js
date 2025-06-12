@@ -1,4 +1,6 @@
 const stylelint = require("stylelint");
+const validateOptions = require("./utils/validateOptions");
+
 
 const ruleName = "aditayvm/at-rule-no-children";
 
@@ -8,7 +10,7 @@ const messages = stylelint.utils.ruleMessages(ruleName, ({
 
 module.exports = stylelint.createPlugin(ruleName, function(options = "") {
   return function(root, result) {
-    var validOptions = stylelint.utils.validateOptions(
+    var validOptions = validateOptions(
       result,
       ruleName,
       options
