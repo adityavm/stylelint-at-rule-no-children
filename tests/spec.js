@@ -346,3 +346,49 @@ test(true, {
     },
   ],
 });
+
+test(true, {
+  plugins: [plugin],
+  ruleName,
+  config: true,
+  reject: [
+    {
+      code: `
+    @import '../../styles/vars';
+
+.nav {
+  display: flex;
+}
+
+.link {
+  display: inline;
+  width: 100px;
+  margin-left: 32px;
+
+  &.active {
+    color: $linkActiveColor;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .link {
+    color: yellow;
+  }
+
+  .nav {
+    width: 600px;
+    color: red;
+  }
+}
+    `,
+      warnings: [
+        {
+          message: `Unexpected rule ".link" inside at-rule "media". (${ruleName})`,
+        },
+        {
+          message: `Unexpected rule ".nav" inside at-rule "media". (${ruleName})`,
+        },
+      ],
+    },
+  ],
+});

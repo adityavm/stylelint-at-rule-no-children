@@ -3,7 +3,6 @@
   "version": "0.4.1",
   "description": "Stylelint rule to disallow children inside at rules",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "node --test tests/spec.js",
     "prettier": "prettier ."
