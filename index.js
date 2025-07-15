@@ -1,28 +1,32 @@
-const stylelint = require("stylelint");
+import stylelint from "stylelint";
 
-const ruleName = "aditayvm/at-rule-no-children";
+const ruleName = "adityavm/at-rule-no-children";
 
-const messages = stylelint.utils.ruleMessages(ruleName, ({
-  unexpected: (block, rule) => `Unexpected rule "${block}" inside at-rule "${rule}".`,
-}));
+const messages = stylelint.utils.ruleMessages(ruleName, {
+  unexpected: (block, rule) =>
+    `Unexpected rule "${block}" inside at-rule "${rule}".`,
+});
 
-module.exports = stylelint.createPlugin(ruleName, function(options = "") {
-  return function(root, result) {
-    var validOptions = stylelint.utils.validateOptions(
+const plugin = stylelint.createPlugin(ruleName, function (options = {}) {
+  return function (root, result) {
+    const validOptions = stylelint.utils.validateOptions(
       result,
       ruleName,
-      options
+      options,
     );
 
     if (!validOptions) {
       return;
     }
 
-    const params = new RegExp(`(${((options || {}).ignore || []).join("|")})\\\(`);
+    const params = new RegExp(
+      `(${((options || {}).ignore || []).join("|")})\\\(`,
+    );
 
-    root.walkAtRules(function(statement){
-      (statement.nodes || []).forEach(node => {
-        if ((options || {}).ignore) { // ignore list
+    root.walkAtRules(function (statement) {
+      (statement.nodes || []).forEach((node) => {
+        if ((options || {}).ignore) {
+          // ignore list
           if (options.ignore.includes(node.parent.name)) return; // @foo
           if (params.test(node.parent.params)) return; // @include foo
         }
@@ -39,3 +43,5 @@ module.exports = stylelint.createPlugin(ruleName, function(options = "") {
     });
   };
 });
+
+export default plugin;

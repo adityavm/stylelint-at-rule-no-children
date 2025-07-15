@@ -7,7 +7,7 @@ Stylelint rule to disallow block declarations inside at rules.
 [Usage](#usage)  
 [Configuration](#configuration)  
 [Why?](#why)  
-[TL;DR](#tldr)  
+[TL;DR](#tldr)
 
 ## Usage
 
@@ -16,6 +16,7 @@ Install the package:
 `npm i stylelint-at-rule-no-children`
 
 Add the plugin and rule to your `.stylelintrc`, like so:
+
 ```
 {
   ...
@@ -33,13 +34,18 @@ Add the plugin and rule to your `.stylelintrc`, like so:
 ## Configuration
 
 The rule accepts an `ignore` list of strings to allow when checking rules or their parameters. Consider the following:
+
 ```css
 @include foo() {
-  body { color: #ff0000; }
+  body {
+    color: #ff0000;
+  }
 }
 
 @foo() {
-  body { color: #ff0000; }
+  body {
+    color: #ff0000;
+  }
 }
 ```
 
@@ -64,7 +70,6 @@ By disallowing block declarations inside at rules, we force developers to have o
 ## TL;DR
 
 ```css
-
 /* good css */
 
 .foo {
@@ -86,5 +91,4 @@ By disallowing block declarations inside at rules, we force developers to have o
     color: blue;
   }
 }
-
 ```

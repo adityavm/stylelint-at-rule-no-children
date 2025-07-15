@@ -1,20 +1,34 @@
-const
-  test = require("stylelint-test-rule-tape"),
-  rule = require(".."),
-  ruleName = rule.ruleName;
+import { testRule } from "stylelint-test-rule-node";
+import plugin from "../index.js";
 
-test(rule.rule, {
+const { ruleName } = plugin;
+
+const test = (run = true, testObj) => {
+  if (run) {
+    testRule(testObj);
+    return;
+  }
+  return;
+};
+
+test(true, {
+  plugins: [plugin],
   ruleName,
-  config: null,
+  config: true,
   accept: [
-    { code: "@include foo() { color: $white; }" },
+    {
+      code: "@include foo() { color: $white; }",
+      description: "Basic, no nesting",
+    },
     {
       code: `
       @include bar() {
         font-size: 11px;
         margin-top: 12px;
       }
-    `},
+    `,
+      description: "Multiline, no nesting",
+    },
     {
       code: `
       @include baz() {
@@ -23,8 +37,13 @@ test(rule.rule, {
         font-size: 11px;
         margin-top: 12px;
       }
-    `},
-    { code: `@media screen and (max-width: 480px) { color: #fff; }` },
+    `,
+      description: "Nested @rules",
+    },
+    {
+      code: `@media screen and (max-width: 480px) { color: #fff; }`,
+      description: "Complex @rule",
+    },
     {
       code: `
       @-webkit-keyframes pacman-balls {
@@ -36,7 +55,9 @@ test(rule.rule, {
           @include transform(translate(-100px, -6.25px));
         }
       }
-    `},
+    `,
+      description: "Nest @rule 2",
+    },
     {
       code: `
       @include baz() {
@@ -47,11 +68,14 @@ test(rule.rule, {
           margin-bottom: 2px;
         }
       }
-    `},
+    `,
+      description: "Nested @rule 3",
+    },
 
     // accepted versions of rejected code
     {
       code: ".class { @include foo() { color: $white; } }",
+      description: "",
     },
     {
       code: `
@@ -60,24 +84,31 @@ test(rule.rule, {
             margin-top: 1px;
           }
         }
-    `},
-    {
-      code: `custom { @media screen and (max-width: 480px) { color: #fff } }`,
+    `,
+      description: "",
     },
     {
+      code: `custom { @media screen and (max-width: 480px) { color: #fff } }`,
+      description: "",
+    },
+    {
+      description: "",
       code: `.class {
         @media screen and (max-width: 480px) {
           color: #fff;
         }
       }
-    `},
+    `,
+    },
     {
+      description: "",
       code: `#id {
         @media screen and (max-width: 480px) {
           color: #fff;
         }
       }
-    `},
+    `,
+    },
   ],
 
   // rejections
@@ -133,19 +164,22 @@ test(rule.rule, {
 
 // test for all at rules
 // list from https://developer.mozilla.org/en/docs/Web/CSS/At-rule
-test(rule.rule, {
+test(true, {
+  plugins: [plugin],
   ruleName,
-  config: null,
+  config: true,
   accept: [
     { code: `@charset "iso-8859-15";` },
-    { code: `
+    {
+      code: `
       @keyframes identifier {
         0% { top: 0; left: 0; }
         30% { top: 50px; }
         68%, 72% { left: 50px; }
         100% { top: 100px; left: 100%; }
       }
-    `},
+    `,
+    },
     {
       code: `
       @import url("fineprint.css") print;
@@ -154,12 +188,14 @@ test(rule.rule, {
       @import url("chrome://communicator/skin/");
       @import "common.css" screen, projection;
       @import url('landscape.css') screen and (orientation:landscape);
-    `},
+    `,
+    },
     {
       code: `
       @namespace prefix url(XML-namespace-URL);
       @namespace prefix "XML-namespace-URL";
-    `},
+    `,
+    },
     {
       code: `
       body {
@@ -167,7 +203,8 @@ test(rule.rule, {
           color: green;
         }
       }
-    `},
+    `,
+    },
     {
       code: `
       body {
@@ -180,7 +217,8 @@ test(rule.rule, {
           background: yellow;
         }
       }
-    `},
+    `,
+    },
     {
       code: `
       @font-face {
@@ -190,7 +228,8 @@ test(rule.rule, {
         url(MgOpenModernaBold.ttf);
         font-weight: bold;
       }
-    `},
+    `,
+    },
     {
       code: `
       @viewport {
@@ -198,7 +237,8 @@ test(rule.rule, {
         min-zoom: 0.5;
         max-zoom: 0.9;
       }
-    `},
+    `,
+    },
     {
       code: `
       @counter-style circled-alpha {
@@ -206,7 +246,8 @@ test(rule.rule, {
         symbols: Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ;
         suffix: " ";
       }
-    `},
+    `,
+    },
   ],
 
   reject: [
@@ -217,7 +258,9 @@ test(rule.rule, {
           color: green;
         }
       }
-    `},
+    `,
+      message: `Unexpected rule "body" inside at-rule "supports". (${ruleName})`,
+    },
     {
       code: `
       @document url(http://www.w3.org/),
@@ -230,11 +273,14 @@ test(rule.rule, {
           background: yellow;
         }
       }
-    `},
+    `,
+      message: `Unexpected rule "body" inside at-rule "document". (${ruleName})`,
+    },
   ],
 });
 
-test(rule.rule, {
+test(true, {
+  plugins: [plugin],
   ruleName,
   config: [{ ignore: ["foo", "baz"] }],
   accept: [
@@ -245,7 +291,8 @@ test(rule.rule, {
           display: block;
         }
       }
-    `},
+    `,
+    },
     {
       code: `
       @include foo() {
@@ -253,7 +300,8 @@ test(rule.rule, {
           display: block;
         }
       }
-    `},
+    `,
+    },
   ],
   reject: [
     {
@@ -263,7 +311,9 @@ test(rule.rule, {
           display: block;
         }
       }
-    `},
+    `,
+      message: `Unexpected rule "body" inside at-rule "include". (${ruleName})`,
+    },
     {
       code: `
       $boolean: true;
@@ -272,11 +322,14 @@ test(rule.rule, {
       } else {
         body { display: flex }
       }
-    `},
+    `,
+      message: `Unexpected rule "body" inside at-rule "if". (${ruleName})`,
+    },
   ],
 });
 
-test(rule.rule, {
+test(true, {
+  plugins: [plugin],
   ruleName,
   config: [{ ignore: ["if"] }],
   accept: [
@@ -288,6 +341,8 @@ test(rule.rule, {
       } else {
         body { display: flex }
       }
-    `},
+    `,
+      description: "abcd",
+    },
   ],
 });
